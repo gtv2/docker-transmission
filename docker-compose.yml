@@ -1,0 +1,27 @@
+---
+version: "3.9"
+services:
+  transmission:
+    image: lscr.io/linuxserver/transmission
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1000M
+        reservations:
+          cpus: '0.25'
+          memory: 250M
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Europe/Moscow
+    volumes:
+      - /share/homes/gotlieb/transmission/config:/config
+      - /share/Downloads/transmission:/downloads
+      - /share/Downloads/transmission/watch:/watch
+    ports:
+      - 9091:9091
+      - 51103:51413
+      - 51103:51413/udp
+    restart: unless-stopped
